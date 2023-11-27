@@ -14,38 +14,39 @@ const winSteps = [
 	[2, 4, 6]
 ];
 
-document.querySelectorAll('.cell').forEach((cell, i, parent) => {
+document.querySelectorAll('.cell').forEach((cell, i, board) => {
 	cell.addEventListener('click', () => {
-		const [won, wonStep] = checkWon();
-
-		if (!won) {
+		if (cell.classList.length < 2) {
 			cell.style = `--backcolor: ${currentPlayer === 'o' ? '#00f' : '#f00'}`;
 			cell.classList.add(currentPlayer);
 			players[currentPlayer].push(i);
 			currentPlayer = currentPlayer === 'o' ? 'x' : 'o';
 
-			const [won, wonStep] = checkWon();
-			console.log(won)
-			won === 'o' && wonStep.forEach(step => parent[step].style = '--backcolor: #0f0');
-			won === 'x' && wonStep.forEach(step => parent[step].style = '--backcolor: #0f0');
-			return;
+			showWon(board);
 		}
-
-		location.reload();
 	});
 });
 
+function showWon(board) {
+	const won = checkWon();
+	const isOne = [...board].every(cell => cell.classList.length > 1) || won;
+	if (!isOne) return;
+
+	document.querySelector('#board').style.scale = 0;
+	setTimeout(() => {
+		document.body.id = won || 'draw';
+		setTimeout(() => location.reload(), 1000);
+	}, 500);
+}
+
 function checkWon() {
 	let won;
-	let wonStep;
 	winSteps.forEach(steps => {
-		if (won) {
-			return;
-		}
+		if (won) return;
 		
 		won = steps.every(step => players.x.includes(step)) ? 'x' : won;
 		won = steps.every(step => players.o.includes(step)) ? 'o' : won;
-		wonStep = won ? steps : [];
 	});
-	return [won, wonStep];
+
+	return won;
 }

@@ -4,7 +4,73 @@ body {
 
 	margin: 0;
 	height: 100vh;
-	background-color: black;
+	background-color: #000;
+}
+body#draw::after {
+	content: 'Draw';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 64px;
+	font-family: sans-serif;
+	font-weight: 900;
+
+	color: goldenrod;
+	translate: -50% -50%;
+	transition: .3s;
+	scale: 0;
+	animation: o .3s forwards;
+}
+body#o::after {
+	content: '';
+	display: block;
+	width: 30vh;
+	height: 30vh;
+	border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+
+	translate: -50% -50%;
+	transition: .3s;
+	scale: 0;
+	border: solid 32px var(--backcolor);
+	animation: o .3s forwards;
+}
+body#x::after {
+	content: '';
+	display: block;
+	height: 10%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 50px 30px 50px 30px;
+	transform: skewX(-65deg);
+
+	rotate: 45deg;
+	translate: -50% -50%;
+	scale: 0;
+	animation: xA .3s forwards;
+	animation-delay: .5s;
+	z-index: 5;
+	background-color: var(--backcolor);
+}
+body#x::before {
+	content: '';
+	display: block;
+	height: 10%;
+	position: absolute;
+	top: 0;
+	left: 100%;
+	border-radius: 50px 30px 50px 30px;
+	transform: skewX(-65deg);
+	background-color: var(--backcolor);
+
+	rotate: -45deg;
+	translate: -50% -50%;
+	transition: .3s;
+	scale: 0;
+	animation: xB .3s forwards;
 }
 
 #board {
@@ -16,6 +82,7 @@ body {
 	height: 70vw;
 
 	background-color: transparent;
+	transition: .3s;
 }
 
 .cell {
@@ -23,6 +90,7 @@ body {
 	overflow: hidden;
 	background-color: #fcf;
 	cursor: pointer;
+	-webkit-tap-highlight-color: transparent;
 }
 .cell.x::after {
 	content: '';

@@ -28,25 +28,37 @@ document.querySelectorAll('.cell').forEach((cell, i, board) => {
 });
 
 function showWon(board) {
-	const won = checkWon();
-	const isOne = [...board].every(cell => cell.classList.length > 1) || won;
-	if (!isOne) return;
+	const [won, wonStep] = checkWon();
+	const isEnd = [...board].every(cell => cell.classList.length > 1) || won;
+	if (!isEnd) return;
 
-	document.querySelector('#board').style.scale = 0;
+	document.querySelectorAll('.cell').forEach((el, i) => {
+		if (isEnd && !won)
+			el.style = `--backcolor: #ab7b00`;
+		else if (wonStep.includes(i))
+			el.style = `--backcolor: #0f0`;
+	})
+
 	setTimeout(() => {
-		document.body.id = won || 'draw';
-		setTimeout(() => location.reload(), 1000);
-	}, 500);
+		document.querySelector('#board').style.scale = 0;
+
+		setTimeout(() => {
+			document.body.id = won || 'draw';
+
+			setTimeout(() => location.reload(), 1000);
+		}, 700);
+	}, 1500);
 }
 
 function checkWon() {
-	let won;
+	let won, wonStep;
 	winSteps.forEach(steps => {
 		if (won) return;
 		
 		won = steps.every(step => players.x.includes(step)) ? 'x' : won;
 		won = steps.every(step => players.o.includes(step)) ? 'o' : won;
+		wonStep = steps;
 	});
 
-	return won;
+	return [won, wonStep];
 }

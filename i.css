@@ -15,7 +15,7 @@ body#draw::after {
 	font-family: sans-serif;
 	font-weight: 900;
 
-	color: goldenrod;
+	color: #daa520;
 	translate: -50% -50%;
 	transition: .3s;
 	scale: 0;
@@ -38,6 +38,7 @@ body#o::after {
 	animation: o .3s forwards;
 }
 body#x::after {
+	--w: 50%;
 	content: '';
 	display: block;
 	height: 10%;
@@ -50,12 +51,12 @@ body#x::after {
 	rotate: 45deg;
 	translate: -50% -50%;
 	scale: 0;
-	animation: xA .3s forwards;
-	animation-delay: .5s;
 	z-index: 5;
 	background-color: var(--backcolor);
+	animation: x .3s forwards .5s;
 }
 body#x::before {
+	--w: 50%;
 	content: '';
 	display: block;
 	height: 10%;
@@ -70,7 +71,7 @@ body#x::before {
 	translate: -50% -50%;
 	transition: .3s;
 	scale: 0;
-	animation: xB .3s forwards;
+	animation: x .3s forwards;
 }
 
 #board {
@@ -78,8 +79,8 @@ body#x::before {
 	grid-template-columns: repeat(3, 1fr);
 	gap: 1%;
 
-	width: 70vw;
-	height: 70vw;
+	width: 70vmin;
+	height: 70vmin;
 
 	background-color: transparent;
 	transition: .3s;
@@ -93,6 +94,7 @@ body#x::before {
 	-webkit-tap-highlight-color: transparent;
 }
 .cell.x::after {
+	--w: 80%;
 	content: '';
 	display: block;
 	height: 10%;
@@ -105,12 +107,12 @@ body#x::before {
 	rotate: 45deg;
 	translate: -50% -50%;
 	scale: 0;
-	animation: xA .3s forwards;
-	animation-delay: .5s;
 	z-index: 5;
 	background-color: var(--backcolor);
+	animation: x .3s forwards .5s;
 }
 .cell.x::before {
+	--w: 80%;
 	content: '';
 	display: block;
 	height: 10%;
@@ -125,7 +127,7 @@ body#x::before {
 	translate: -50% -50%;
 	transition: .3s;
 	scale: 0;
-	animation: xB .3s forwards;
+	animation: x .3s forwards;
 }
 .cell.o::after {
 	content: '';
@@ -144,17 +146,9 @@ body#x::before {
 	animation: o .3s forwards;
 }
 
-@keyframes xA {
+@keyframes x {
 	to {
-		width: 80%;
-		scale: 1;
-		top: 50%;
-		left: 50%;
-	}
-}
-@keyframes xB {
-	to {
-		width: 80%;
+		width: var(--w);
 		scale: 1;
 		top: 50%;
 		left: 50%;
@@ -163,12 +157,5 @@ body#x::before {
 @keyframes o {
 	to {
 		scale: 1;
-	}
-}
-
-@media (width > 426px) {
-	#board {
-		width: 70vh;
-		height: 70vh;
 	}
 }
